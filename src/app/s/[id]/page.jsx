@@ -1,32 +1,43 @@
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { databases } from "@/lib/appwrite";
 
 const RedirectPage = ({ params }) => {
-    const { id } = params; 
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        const fetchOriginalUrl = async () => {
-            try {
-                const document = await databases.getDocument(
-                    "67209f0f00173cdb3169", // Replace with your actual database ID
-                    "6720ed7c000032387dc9", // Replace with your actual collection ID
-                    id
-                );
-                router.push(document.originalUrl);
-            } catch (error) {
-                console.error("Redirect failed:", error);
-                router.push("/error"); // Redirect to an error page if needed
-            }
-        };
+  useEffect(() => {
+    const fetchOriginalUrl = async () => {
+      try {
+        const { id } = await params;
 
-        fetchOriginalUrl();
-    }, [id, router]);
+        const document = await databases.getDocument(
+          `${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}`,
+          `${process.env.NEXT_PUBLIC_SHORTENED_URL_ID}`,
+          id
+        );
 
-    return <p>Redirecting...</p>;
+        console.log("Fetched Document:", document);
+
+        if (!document.originalUrl || !document.originalUrl.startsWith("http")) {
+          console.error("Invalid URL:", document.originalUrl);
+          router.push("/error");
+          return;
+        }
+
+        console.log("Redirecting to:", document.originalUrl);
+        router.push(document.originalUrl);
+      } catch (error) {
+        console.error("Redirect failed:", error);
+        console.log("Params:", params);
+        router.push("/error");
+      }
+    };
+
+    fetchOriginalUrl();
+  }, [params, router]);
+
+  return <p>Redirecting...</p>;
 };
 
 export default RedirectPage;

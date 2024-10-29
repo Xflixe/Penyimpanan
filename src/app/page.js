@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { account } from '@/lib/appwrite';
 import { useRouter } from 'next/navigation';
-import { Vortex } from '@/components/ui/vortex'; // Adjust the import path accordingly
+import { Vortex } from '@/components/ui/vortex';
 
 const Home = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,7 +11,7 @@ const Home = () => {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                await account.get(); // Check if the user is logged in
+                await account.get();
                 setIsLoggedIn(true);
             } catch (error) {
                 setIsLoggedIn(false);
@@ -22,15 +22,13 @@ const Home = () => {
     }, []);
 
     const handleDashboardRedirect = () => {
-        router.push('/dashboard'); // Redirect to the dashboard
+        router.push('/dashboard');
     };
 
     return (
         <div className="relative w-full h-screen">
-            {/* Background Vortex Component */}
             <Vortex />
 
-            {/* Overlay Content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <h2 className="text-center text-3xl font-semibold mb-4">Welcome to OpalSpace</h2>
                 {isLoggedIn ? (

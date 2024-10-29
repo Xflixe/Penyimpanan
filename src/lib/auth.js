@@ -4,7 +4,12 @@ import { ID } from 'appwrite';
 export const registerUser = async (email, password, name) => {
     try {
         const user = await account.create(ID.unique(), email, password, name);
-        await databases.createDocument('67209f0f00173cdb3169', '67209f1e0028e75dceb6', user.$id, { name, email });
+        await databases.createDocument(
+          `${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}`,
+          `${process.env.NEXT_PUBLIC_USERS_COLLECTION_ID}`,
+          user.$id,
+          { name, email }
+        );
         return user;
     } catch (error) {
         console.error('Registration failed:', error);
@@ -14,7 +19,6 @@ export const registerUser = async (email, password, name) => {
 
 export const loginUser = async (email, password) => {
     try {
-        // Create a session for the user
         const session = await account.createEmailPasswordSession(email, password);
         return session;
     } catch (error) {
@@ -34,18 +38,20 @@ export const logoutUser = async () => {
 
 export const uploadFile = async (file, userId) => {
     try {
-        // Upload file to Appwrite storage
-        const uploadedFile = await storage.createFile('6720a2a2001867f6768e', 'unique()', file);
+        const uploadedFile = await storage.createFile(
+          `${process.env.NEXT_PUBLIC_VONE_BUCKET_ID}`,
+          ID.unique(),
+          file
+        );
 
-        // Add file metadata to the UserFiles collection
         await databases.createDocument(
-            '67209f0f00173cdb3169', // Replace with your database ID
-            '6720ad02000746b42e77',   // Replace with your collection ID
-            'unique()',    // Unique document ID
-            {
-                fileId: uploadedFile.$id,
-                userId: userId,
-            }
+          `${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}`,
+          `${process.env.NEXT_PUBLIC_FILES_COLLECTION_ID}`,
+          ID.unique(),
+          {
+            fileId: uploadedFile.$id,
+            userId: userId,
+          }
         );
 
         return uploadedFile;

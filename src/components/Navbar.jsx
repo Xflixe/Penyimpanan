@@ -22,20 +22,20 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await account.deleteSession('current'); // Log out the current session
+            await account.deleteSession('current');
             setIsLoggedIn(false);
-            router.push('/'); // Redirect to the home page after logging out
+            router.push('/');
         } catch (error) {
             console.error('Logout failed:', error);
         }
     };
 
     const handleHomeRedirect = () => {
-        router.push('/'); // Redirect to the Home
+        router.push('/');
     };
 
     return (
-        <nav className="p-4 bg-black z-10"> {/* Added bg-opacity for transparency and fixed positioning */}
+        <nav className="p-4 bg-black z-10">
             <div className="container mx-auto flex justify-between items-center">
                 <button className="text-white text-2xl" onClick={handleHomeRedirect}>OpalSpace</button>
                 <div>
