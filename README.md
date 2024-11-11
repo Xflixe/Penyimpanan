@@ -2,6 +2,8 @@
 
 <p align="center"><img src="https://socialify.git.ci/divyansh355/opalspace/image?font=KoHo&amp;forks=1&amp;issues=1&amp;language=1&amp;name=1&amp;owner=1&amp;pulls=1&amp;stargazers=1&amp;theme=Dark" alt="project-image"></p>
 
+ [![Netlify Status](https://api.netlify.com/api/v1/badges/db8432a8-f46d-4490-b7dd-27c9dbbca397/deploy-status)](https://app.netlify.com/sites/opalspace/deploys)
+
 <p id="description">Cloud Storage Solution with unlimited storage and upload files with sizes up to 5 GB.</p>
 
 <h2>🚀 Demo</h2>
