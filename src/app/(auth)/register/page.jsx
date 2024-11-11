@@ -31,7 +31,7 @@ const Register = () => {
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-black">
-      <FlickeringGrid className="absolute inset-0 z-0"/>
+      <FlickeringGrid className="absolute inset-0 z-0" />
 
       <div className="relative z-10 max-w-md p-6 bg-white bg-opacity-80 backdrop-blur-md rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center text-gray-800">
@@ -80,6 +80,7 @@ const Register = () => {
               Password
             </label>
             <input
+              minLength={8}
               type="password"
               id="password"
               value={password}
